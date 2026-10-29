@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>황금빛 밀양 — 접수 관리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#FBF6EA;--ink:#2B2419;--muted:#7A6E5C;--gold:#D9A21B;--gold-deep:#B07A0C;--amber:#E26315;--line:#EADFC6;--ok:#2E7D32;--err:#C62828}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+  .wrap{max-width:1200px;margin:0 auto;padding:20px 16px 60px}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+  input,select,button{font:inherit;font-size:14px}
+  input[type=password],input[type=text],input[type=number],select{padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff}
+  button{padding:9px 16px;border:0;border-radius:10px;background:var(--gold-deep);color:#fff;font-weight:700;cursor:pointer}
+  button.sec{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+  button.warn{background:var(--amber)}
+  button.danger{background:#fff;color:var(--err);border:1.5px solid #F3C6C6;padding:5px 9px;font-size:12px}
+  button:disabled{opacity:.5;cursor:default}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+  .stat{background:#FBF6EA;border-radius:10px;padding:10px 12px;text-align:center}
+  .stat b{display:block;font-size:22px;color:var(--gold-deep)}
+  .stat span{font-size:12px;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle;text-align:left}
+  th{background:#FBF6EA;font-weight:700;white-space:nowrap;position:sticky;top:0}
+  td a{color:#1565C0;word-break:break-all}
+  td input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold-deep)}
+  td select{padding:5px 8px;font-size:12px}
+  tr.excluded td{color:#999;background:#FAFAFA}
+  tr.winner td{background:#FFF7DF}
+  .tbl{overflow:auto;max-height:70vh}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700}
+  .b-ok{background:#E8F5E9;color:var(--ok)} .b-no{background:#FDECEA;color:var(--err)} .b-wait{background:#EEE;color:#666} .b-win{background:#FFE9A8;color:#8A5A00}
+  .msg{font-size:13px;margin-left:8px}
+  .msg.ok{color:var(--ok)} .msg.err{color:var(--err)}
+  .drawlist{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .drawlist span{background:#FFF7DF;border:1px solid #F0DBA0;border-radius:8px;padding:5px 9px;font-size:13px}
+  #app{display:none}
+  @media (max-width:700px){.hide-m{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🍂 황금빛 밀양 — 접수 관리</h1>
+  <div class="sub">2026 반하다밀양 반값여행 11월 SNS 이벤트 · 운영 가곡원류</div>
+
+  <div class="card" id="login">
+    <div class="row">
+      <input type="password" id="pass" placeholder="관리자 비밀번호" autocomplete="current-password">
+      <button id="loginBtn">접속</button>
+      <span class="msg err" id="loginMsg"></span>
+    </div>
+  </div>
+
+  <div id="app">
+    <div class="card">
+      <div class="stats">
+        <div class="stat"><b id="sTotal">0</b><span>총 접수</span></div>
+        <div class="stat"><b id="sWait">0</b><span>미확인</span></div>
+        <div class="stat"><b id="sValid">0</b><span>유효(추첨 대상)</span></div>
+        <div class="stat"><b id="sExcl">0</b><span>제외</span></div>
+        <div class="stat"><b id="sWin">0</b><span>당첨</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <select id="filter">
+          <option value="all">전체</option><option value="wait">미확인</option><option value="valid">유효</option>
+          <option value="excl">제외</option><option value="win">당첨</option>
+        </select>
+        <input type="text" id="q" placeholder="성명·전화·네이버ID 검색" style="min-width:220px">
+        <select id="spotF"><option value="">명소 전체</option><option>금시당 백곡재</option><option>월연정</option><option>오연정</option><option>표충사</option><option>밀양향교</option><option>영남루</option></select>
+        <button class="sec" id="reload">새로고침</button>
+        <button class="sec" id="csv">CSV 다운로드</button>
+        <span class="msg" id="msg"></span>
+      </div>
+    </div>
+
+    <div class="card tbl">
+      <table>
+        <thead><tr>
+          <th>#</th><th>접수시각</th><th>성명</th><th>전화번호</th><th>네이버ID</th><th>게시물</th><th>명소</th>
+          <th>인증 확인</th><th>제외 사유</th><th>당첨</th><th>상태</th><th></th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:16px">🎁 추첨 (유효 접수 중 무작위)</h3>
+      <div class="row">
+        <input type="number" id="drawN" value="20" min="1" max="100" style="width:90px"> 명
+        <button class="warn" id="drawBtn">추첨 후보 뽑기</button>
+        <button id="confirmBtn" disabled>이 명단으로 당첨 확정</button>
+        <span class="msg" id="drawMsg"></span>
+      </div>
+      <div class="drawlist" id="drawList"></div>
+      <div class="sub" style="margin-top:8px">확정하면 기존 당첨 표시는 모두 해제되고 이 명단만 당첨으로 저장됩니다. 추첨 과정은 스크린샷으로 남겨 두세요.</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const CONFIG = {
+  SUPABASE_URL: 'https://snaldhxucwsaifqrccih.supabase.co',
+  SUPABASE_KEY: 'sb_publishable_Jw04C4E_pWJFd7-IT3gyqw_onzKKmrq'
+};
+const REASONS = ['', '해시태그 누락', '명소 불일치', '비공개 게시물', '과거 사진', '타인·AI 이미지', '중복 접수', '반값여행 미이용', '게시물 삭제', '기타'];
+const $ = id => document.getElementById(id);
+let sb, PASS = '', DATA = [], DRAW = [];
+
+function fmt(t){ const d=new Date(t); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
+function phoneFmt(p){ return p.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3'); }
+function status(r){ if(r.winner) return '<span class="badge b-win">당첨</span>'; if(r.excluded_reason) return '<span class="badge b-no">제외</span>'; if(r.verified) return '<span class="badge b-ok">유효</span>'; return '<span class="badge b-wait">미확인</span>'; }
+function note(el,txt,cls){ el.textContent=txt; el.className='msg '+(cls||''); if(txt) setTimeout(()=>{el.textContent=''},2500); }
+
+async function rpc(fn, args){ const {data,error}=await sb.rpc(fn,{p_pass:PASS,...args}); if(error) throw error; return data; }
+
+async function load(){
+  try{ DATA = await rpc('nov_admin_list',{}); }
+  catch(e){ if(/AUTH/.test(e.message)){ logout('비밀번호가 틀렸습니다.'); return; } note($('msg'),'불러오기 실패: '+e.message,'err'); return; }
+  render();
+}
+function render(){
+  const f=$('filter').value, q=$('q').value.trim().toLowerCase(), sp=$('spotF').value;
+  const list = DATA.filter(r=>{
+    if(f==='wait' && (r.verified||r.excluded_reason)) return false;
+    if(f==='valid' && !(r.verified && !r.excluded_reason)) return false;
+    if(f==='excl' && !r.excluded_reason) return false;
+    if(f==='win' && !r.winner) return false;
+    if(sp && r.spot!==sp) return false;
+    if(q && !(r.name+r.phone+r.naver_id).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  $('sTotal').textContent=DATA.length;
+  $('sWait').textContent=DATA.filter(r=>!r.verified&&!r.excluded_reason).length;
+  $('sValid').textContent=DATA.filter(r=>r.verified&&!r.excluded_reason).length;
+  $('sExcl').textContent=DATA.filter(r=>r.excluded_reason).length;
+  $('sWin').textContent=DATA.filter(r=>r.winner).length;
+  $('rows').innerHTML = list.map((r,i)=>`
+    <tr data-id="${r.id}" class="${r.excluded_reason?'excluded':''} ${r.winner?'winner':''}">
+      <td>${r.id}</td><td class="hide-m">${fmt(r.created_at)}</td><td><b>${esc(r.name)}</b></td><td>${phoneFmt(r.phone)}</td><td>${esc(r.naver_id)}</td>
+      <td><a href="${esc(r.post_url)}" target="_blank" rel="noopener">열기 ↗</a></td><td>${esc(r.spot)}</td>
+      <td><input type="checkbox" class="v" ${r.verified?'checked':''}></td>
+      <td><select class="x">${REASONS.map(x=>`<option ${x===(r.excluded_reason||'')?'selected':''}>${x}</option>`).join('')}</select></td>
+      <td><input type="checkbox" class="w" ${r.winner?'checked':''}></td>
+      <td>${status(r)}</td>
+      <td><button class="danger del">삭제</button></td>
+    </tr>`).join('') || '<tr><td colspan="12" style="text-align:center;color:#999;padding:24px">접수 내역이 없습니다</td></tr>';
+}
+function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+$('rows').addEventListener('change', async e=>{
+  const tr=e.target.closest('tr'); if(!tr) return;
+  const id=+tr.dataset.id, r=DATA.find(x=>x.id===id);
+  r.verified=tr.querySelector('.v').checked; r.excluded_reason=tr.querySelector('.x').value||null; r.winner=tr.querySelector('.w').checked;
+  try{ await rpc('nov_admin_update',{p_id:id,p_verified:r.verified,p_excluded_reason:r.excluded_reason,p_winner:r.winner}); note($('msg'),`#${id} 저장됨`,'ok'); render(); }
+  catch(err){ note($('msg'),'저장 실패: '+err.message,'err'); }
+});
+$('rows').addEventListener('click', async e=>{
+  if(!e.target.classList.contains('del')) return;
+  const tr=e.target.closest('tr'), id=+tr.dataset.id, r=DATA.find(x=>x.id===id);
+  if(!window.confirm(`#${id} ${r.name} 접수를 삭제할까요? 되돌릴 수 없습니다.`)) return;
+  try{ await rpc('nov_admin_delete',{p_id:id}); DATA=DATA.filter(x=>x.id!==id); render(); note($('msg'),'삭제됨','ok'); }
+  catch(err){ note($('msg'),'삭제 실패: '+err.message,'err'); }
+});
+['filter','q','spotF'].forEach(id=>$(id).addEventListener('input',render));
+$('reload').onclick=load;
+
+$('csv').onclick=()=>{
+  const H=['id','접수시각','성명','전화번호','네이버ID','게시물주소','명소','인증확인','제외사유','당첨','활용동의','개인정보동의'];
+  const rows=DATA.map(r=>[r.id,new Date(r.created_at).toLocaleString('ko-KR'),r.name,phoneFmt(r.phone),r.naver_id,r.post_url,r.spot,r.verified?'Y':'',r.excluded_reason||'',r.winner?'Y':'',r.agree_use?'Y':'',r.agree_privacy?'Y':'']);
+  const csv='﻿'+[H,...rows].map(a=>a.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=`황금빛밀양_접수_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+};
+
+$('drawBtn').onclick=async()=>{
+  try{ DRAW=await rpc('nov_admin_draw',{p_n:+$('drawN').value||20});
+    $('drawList').innerHTML=DRAW.map((r,i)=>`<span>${i+1}. ${esc(r.name)} (${phoneFmt(r.phone).replace(/-\d{4}-/,'-****-')})</span>`).join('');
+    $('confirmBtn').disabled=DRAW.length===0; note($('drawMsg'),`${DRAW.length}명 추첨됨 (유효 접수 ${$('sValid').textContent}명 중)`,'ok');
+  }catch(e){ note($('drawMsg'),'추첨 실패: '+e.message,'err'); }
+};
+$('confirmBtn').onclick=async()=>{
+  if(!window.confirm(`${DRAW.length}명을 당첨으로 확정할까요? 기존 당첨 표시는 모두 해제됩니다.`)) return;
+  try{ const n=await rpc('nov_admin_set_winners',{p_ids:DRAW.map(r=>r.id)}); note($('drawMsg'),`${n}명 당첨 확정 저장`,'ok'); $('confirmBtn').disabled=true; load(); }
+  catch(e){ note($('drawMsg'),'확정 실패: '+e.message,'err'); }
+};
+
+function logout(msg){ PASS=''; try{sessionStorage.removeItem('nov_pass')}catch(e){} $('app').style.display='none'; $('login').style.display='block'; $('loginMsg').textContent=msg||''; }
+async function login(p){
+  if(typeof supabase==='undefined'){ $('loginMsg').textContent='접속 모듈 로드 실패 — 새로고침'; return; }
+  sb = sb || supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+  PASS=p;
+  try{ await rpc('nov_admin_list',{}); }
+  catch(e){ logout(/AUTH/.test(e.message)?'비밀번호가 틀렸습니다.':'접속 실패: '+e.message); return; }
+  try{sessionStorage.setItem('nov_pass',p)}catch(e){}
+  $('login').style.display='none'; $('app').style.display='block'; load();
+}
+$('loginBtn').onclick=()=>login($('pass').value.trim());
+$('pass').addEventListener('keydown',e=>{ if(e.key==='Enter') $('loginBtn').click(); });
+(function(){ let p=''; try{p=sessionStorage.getItem('nov_pass')||''}catch(e){} if(p) login(p); })();
+</script>
+</body>
+</html>

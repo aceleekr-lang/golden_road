@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>황금빛 밀양, 은행나무 산책 — 참여 접수</title>
+<meta name="description" content="2026 반하다밀양 반값여행 11월 SNS 이벤트 「황금빛 밀양, 은행나무 산책」 참여 접수">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF6EA; --card:#FFFFFF; --ink:#2B2419; --muted:#7A6E5C;
+    --gold:#D9A21B; --gold-deep:#B07A0C; --amber:#E26315; --line:#EADFC6;
+    --ok:#2E7D32; --err:#C62828;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:520px;margin:0 auto;padding:0 16px 56px}
+  header{text-align:center;padding:40px 0 20px}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold-deep);border:1px solid var(--gold);border-radius:999px;padding:4px 12px;margin-bottom:14px;background:#fff}
+  h1{margin:0;font-size:28px;font-weight:900;line-height:1.25;letter-spacing:-.02em}
+  h1 span{display:block;font-size:16px;font-weight:500;color:var(--muted);margin-top:8px;letter-spacing:0}
+  .leaf{font-size:40px;line-height:1;margin-bottom:8px}
+  .period{margin:16px auto 0;display:inline-block;background:linear-gradient(90deg,var(--gold),var(--amber));color:#fff;font-weight:700;padding:8px 18px;border-radius:12px;font-size:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 24px rgba(120,90,20,.06)}
+  .card h2{font-size:16px;margin:0 0 12px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .card h2 i{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;font-style:normal;font-size:13px;align-items:center;justify-content:center;font-weight:900}
+  ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s}
+  ol.steps li{position:relative;padding-left:34px;margin-bottom:10px;font-size:14px;counter-increment:s}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:#FFF3D6;color:var(--gold-deep);font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .tag{background:#FFF3D6;color:var(--gold-deep);font-weight:700;font-size:13px;padding:4px 10px;border-radius:8px}
+  .spots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  .spot{font-size:13px;background:#FBF6EA;border-radius:10px;padding:8px 10px;border:1px solid var(--line)}
+  .spot b{display:block;font-size:14px}
+  .spot small{color:var(--muted)}
+  label{display:block;font-size:14px;font-weight:700;margin:16px 0 6px}
+  label .req{color:var(--amber)}
+  label small{font-weight:400;color:var(--muted);margin-left:6px}
+  input[type=text],input[type=tel],input[type=url],select{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);outline:none;transition:border .15s}
+  input:focus,select:focus{border-color:var(--gold)}
+  input.bad{border-color:var(--err)}
+  .hint{font-size:12px;color:var(--muted);margin-top:5px}
+  .hint.err{color:var(--err);font-weight:500}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:13px;font-weight:400;margin-top:12px;padding:12px;background:#FBF6EA;border-radius:12px;border:1px solid var(--line)}
+  .check input{margin-top:3px;width:18px;height:18px;accent-color:var(--gold-deep);flex:none}
+  .check b{font-weight:700}
+  button{width:100%;margin-top:22px;font:inherit;font-size:17px;font-weight:900;color:#fff;background:linear-gradient(90deg,var(--gold-deep),var(--amber));border:0;border-radius:14px;padding:16px;cursor:pointer;letter-spacing:-.01em;box-shadow:0 8px 20px rgba(226,99,21,.25)}
+  button:disabled{opacity:.6;cursor:default;box-shadow:none}
+  .notice{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.7}
+  .notice li{margin-bottom:2px}
+  .done{text-align:center;padding:30px 10px}
+  .done .big{font-size:56px;line-height:1}
+  .done h2{justify-content:center;font-size:22px;margin-top:10px}
+  .done p{color:var(--muted);font-size:14px;margin:6px 0}
+  .closed{text-align:center;padding:30px 10px;color:var(--muted)}
+  .alert{background:#FDECEA;color:var(--err);border-radius:12px;padding:12px 14px;font-size:14px;margin-top:14px;display:none}
+  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:28px;line-height:1.8}
+  .hero{margin:22px -16px 0;position:relative}
+  .hero img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+  .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(251,246,234,0) 60%,var(--bg) 100%)}
+  .spot img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:8px;margin-bottom:6px;background:#F1E6CC}
+  .done img{display:block;width:100%;max-width:320px;margin:0 auto 8px;border-radius:14px}
+  @media (max-width:360px){.spots{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="leaf">🍂</div>
+    <div class="eyebrow">2026 반하다밀양 반값여행 · 11월 SNS 이벤트</div>
+    <h1>황금빛 밀양,<br>은행나무 산책<span>인증샷 올리고 네이버포인트 받자!</span></h1>
+    <div class="period">2026. 11. 1.(일) ~ 11. 30.(월)</div>
+    <div class="hero"><img src="img/hero.jpg" alt="황금빛 은행나무 아래를 걷는 밀양 가을 산책" onerror="this.parentNode.style.display='none'"></div>
+  </header>
+
+  <section class="card">
+    <h2><i>1</i>참여 방법</h2>
+    <ol class="steps">
+      <li>아래 <b>은행나무 명소 6곳 중 1곳 이상</b> 방문 후 은행나무와 함께 인증샷 촬영</li>
+      <li>인스타그램 또는 네이버 블로그에 <b>필수 해시태그 5개</b>와 방문 명소명을 넣어 <b>공개</b>로 게시</li>
+      <li>이 페이지에서 <b>게시물 주소를 접수</b> (1인 1회)</li>
+      <li>12. 3.(목) 반하다밀양 홈페이지에서 당첨자 발표 → <b>네이버포인트 2만원 × 20명</b></li>
+    </ol>
+    <div class="tags">
+      <span class="tag">#반하다밀양</span><span class="tag">#반값여행</span><span class="tag">#밀양여행</span><span class="tag">#황금빛밀양</span><span class="tag">#밀양은행나무</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><i>2</i>인증 명소 6곳</h2>
+    <div class="spots">
+      <div class="spot"><img src="img/geumsidang.jpg" alt="금시당 백곡재" onerror="this.style.display='none'"><b>금시당 백곡재</b><small>활성로 24-183 · 450년 은행나무</small></div>
+      <div class="spot"><img src="img/wolyeonjeong.jpg" alt="월연정" onerror="this.style.display='none'"><b>월연정</b><small>용평로 330-7 · 밀양강변 정자</small></div>
+      <div class="spot"><img src="img/oyeonjeong.jpg" alt="오연정" onerror="this.style.display='none'"><b>오연정</b><small>교동 · 한옥과 은행나무</small></div>
+      <div class="spot"><img src="img/pyochungsa.jpg" alt="표충사" onerror="this.style.display='none'"><b>표충사</b><small>단장면 · 사찰 경내 단풍</small></div>
+      <div class="spot"><img src="img/hyanggyo.jpg" alt="밀양향교" onerror="this.style.display='none'"><b>밀양향교</b><small>교동 · 향교 앞 은행나무</small></div>
+      <div class="spot"><img src="img/yeongnamru.jpg" alt="영남루" onerror="this.style.display='none'"><b>영남루</b><small>중앙로 324 · 밀양강 조망</small></div>
+    </div>
+  </section>
+
+  <section class="card" id="formCard">
+    <h2><i>3</i>참여 접수</h2>
+    <form id="entryForm" novalidate>
+      <label for="name">성명 <span class="req">*</span></label>
+      <input type="text" id="name" name="name" placeholder="홍길동" maxlength="20" autocomplete="name" required>
+
+      <label for="phone">전화번호 <span class="req">*</span><small>반값여행 신청 시 사용한 번호</small></label>
+      <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" inputmode="numeric" autocomplete="tel" required>
+      <div class="hint" id="phoneHint">반값여행 신청자 확인과 당첨 안내에 사용됩니다.</div>
+
+      <label for="naver">네이버 아이디 <span class="req">*</span><small>포인트 지급용</small></label>
+      <input type="text" id="naver" name="naver" placeholder="naver_id (@naver.com 제외)" maxlength="40" autocomplete="off" required>
+
+      <label for="url">게시물(SNS) 주소 <span class="req">*</span></label>
+      <input type="url" id="url" name="url" placeholder="https://www.instagram.com/p/… 또는 https://blog.naver.com/…" inputmode="url" required>
+      <div class="hint" id="urlHint">인스타그램 또는 네이버 블로그 게시물 링크를 붙여 넣어 주세요. (공개 게시물만 인정)</div>
+
+      <label for="spot">방문 명소 <span class="req">*</span></label>
+      <select id="spot" name="spot" required>
+        <option value="">선택해 주세요</option>
+        <option>금시당 백곡재</option><option>월연정</option><option>오연정</option>
+        <option>표충사</option><option>밀양향교</option><option>영남루</option>
+      </select>
+
+      <label class="check"><input type="checkbox" id="agreeUse" required>
+        <span><b>[필수]</b> 게시한 사진을 밀양시·밀양문화관광재단의 관광 홍보 및 「반하다밀양 2026 매거진」에 활용(계정명 표기)하는 것에 동의합니다.</span></label>
+      <label class="check"><input type="checkbox" id="agreePrivacy" required>
+        <span><b>[필수]</b> 개인정보(성명·전화번호·네이버 아이디) 수집·이용에 동의합니다. 수집 목적: 참여자 확인, 당첨 안내, 네이버포인트 지급 / 보유 기간: 지급 완료 후 즉시 파기</span></label>
+
+      <div class="alert" id="alertBox"></div>
+      <button type="submit" id="submitBtn">접수하기</button>
+    </form>
+    <ul class="notice">
+      <li>2026년 11월 운영기간 중 촬영한 사진만 인정되며, 과거 사진·타인 사진·AI 생성 이미지는 제외됩니다.</li>
+      <li>게시물은 당첨자 발표일(12. 3.)까지 삭제·비공개 전환 없이 유지해 주세요.</li>
+      <li>게시물은 여러 개 올려도 되지만 추첨은 1인 1회(전화번호 기준 최초 접수 1건)입니다.</li>
+      <li>반값여행 이용자가 아닌 경우 접수가 제외될 수 있습니다.</li>
+    </ul>
+  </section>
+
+  <section class="card done" id="doneCard" style="display:none">
+    <img src="img/done.jpg" alt="" onerror="this.style.display='none'"><div class="big">🍁</div>
+    <h2>접수가 완료되었습니다!</h2>
+    <p id="doneName"></p>
+    <p>당첨자는 <b>12. 3.(목)</b> 반하다밀양 홈페이지에 공지되며,<br>당첨 시 입력하신 전화번호로 개별 안내드립니다.</p>
+    <p style="margin-top:14px">발표일까지 게시물을 꼭 유지해 주세요 🙏</p>
+  </section>
+
+  <section class="card closed" id="closedCard" style="display:none">
+    <div style="font-size:40px">🍂</div>
+    <p id="closedMsg"></p>
+  </section>
+
+  <footer>주최 밀양시 · 운영 가곡원류<br>문의: 반하다밀양 홈페이지(mybanhada.com)</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+// ───────── 설정 ─────────
+const CONFIG = {
+  SUPABASE_URL: 'https://snaldhxucwsaifqrccih.supabase.co',
+  SUPABASE_KEY: 'sb_publishable_Jw04C4E_pWJFd7-IT3gyqw_onzKKmrq',
+  TABLE: 'banhada_nov_entries',
+  OPEN_AT:  '2026-11-01T00:00:00+09:00',
+  CLOSE_AT: '2026-11-30T23:59:59+09:00',
+  TEST_MODE: false   // true면 기간 상관없이 접수 가능 (배포 전 테스트용)
+};
+
+const $ = id => document.getElementById(id);
+const form = $('entryForm'), alertBox = $('alertBox'), btn = $('submitBtn');
+
+// 기간 체크
+(function gate(){
+  if (CONFIG.TEST_MODE) return;
+  const now = Date.now();
+  let msg = '';
+  if (now < Date.parse(CONFIG.OPEN_AT)) msg = '이벤트는 <b>11월 1일(일)</b>부터 접수를 시작합니다.<br>조금만 기다려 주세요!';
+  if (now > Date.parse(CONFIG.CLOSE_AT)) msg = '접수가 마감되었습니다.<br>당첨자는 <b>12월 3일(목)</b> 반하다밀양 홈페이지에서 발표됩니다.';
+  if (msg){ $('formCard').style.display='none'; $('closedMsg').innerHTML=msg; $('closedCard').style.display='block'; }
+})();
+
+// 전화번호 자동 하이픈
+$('phone').addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g,'').slice(0,11);
+  if (v.length > 7) v = v.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+  else if (v.length > 3) v = v.replace(/(\d{3})(\d+)/, '$1-$2');
+  e.target.value = v;
+});
+
+function showErr(msg){ alertBox.innerHTML = msg; alertBox.style.display='block'; alertBox.scrollIntoView({behavior:'smooth',block:'center'}); }
+function clearErr(){ alertBox.style.display='none'; document.querySelectorAll('.bad').forEach(x=>x.classList.remove('bad')); }
+
+function validate(d){
+  const bad = [];
+  if (d.name.length < 2) bad.push(['name','성명을 입력해 주세요.']);
+  if (!/^01[016789]\d{7,8}$/.test(d.phone)) bad.push(['phone','전화번호 형식을 확인해 주세요. (예: 010-1234-5678)']);
+  if (!/^[a-z0-9_.\-]{3,40}$/i.test(d.naver_id)) bad.push(['naver','네이버 아이디를 확인해 주세요. (@naver.com은 빼고 입력)']);
+  let okUrl = false;
+  try { const u = new URL(d.post_url); okUrl = /^https?:$/.test(u.protocol) && /(instagram\.com|naver\.com|naver\.me)$/i.test(u.hostname.replace(/^www\./,'')) ; } catch(e){}
+  if (!okUrl) bad.push(['url','인스타그램 또는 네이버 블로그 게시물 주소(https://…)를 입력해 주세요.']);
+  if (!d.spot) bad.push(['spot','방문 명소를 선택해 주세요.']);
+  if (!$('agreeUse').checked || !$('agreePrivacy').checked) bad.push([null,'필수 동의 항목에 모두 체크해 주세요.']);
+  return bad;
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault(); clearErr();
+  const d = {
+    name: $('name').value.trim(),
+    phone: $('phone').value.replace(/\D/g,''),
+    naver_id: $('naver').value.trim().replace(/@naver\.com$/i,''),
+    post_url: $('url').value.trim(),
+    spot: $('spot').value,
+    agree_use: $('agreeUse').checked,
+    agree_privacy: $('agreePrivacy').checked,
+    user_agent: navigator.userAgent.slice(0,200)
+  };
+  const bad = validate(d);
+  if (bad.length){ bad.forEach(([id])=> id && $(id).classList.add('bad')); showErr(bad.map(b=>b[1]).join('<br>')); return; }
+
+  if (typeof supabase === 'undefined'){ showErr('접수 모듈을 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.'); return; }
+  const sb = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+  btn.disabled = true; btn.textContent = '접수 중…';
+  const { error } = await sb.from(CONFIG.TABLE).insert(d);
+  if (error){
+    btn.disabled = false; btn.textContent = '접수하기';
+    if (error.code === '23505') showErr('이미 접수된 전화번호입니다.<br>추첨은 1인 1회(최초 접수 1건)만 인정됩니다.');
+    else showErr('접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.<br><small>' + (error.message||'') + '</small>');
+    return;
+  }
+  $('formCard').style.display='none';
+  $('doneName').textContent = d.name + '님, 황금빛 밀양 산책에 참여해 주셔서 감사합니다.';
+  $('doneCard').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
