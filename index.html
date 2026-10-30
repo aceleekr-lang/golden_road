@@ -15,7 +15,8 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{font-family:'Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  body{font-family:'Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+  td a,input{word-break:break-all}
   .wrap{max-width:520px;margin:0 auto;padding:0 16px 56px}
   header{text-align:center;padding:40px 0 20px}
   .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold-deep);border:1px solid var(--gold);border-radius:999px;padding:4px 12px;margin-bottom:14px;background:#fff}
@@ -27,14 +28,15 @@
   .card h2{font-size:16px;margin:0 0 12px;font-weight:700;display:flex;align-items:center;gap:8px}
   .card h2 i{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;font-style:normal;font-size:13px;align-items:center;justify-content:center;font-weight:900}
   ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s}
-  ol.steps li{position:relative;padding-left:34px;margin-bottom:10px;font-size:14px;counter-increment:s}
+  ol.steps li{position:relative;padding-left:34px;margin-bottom:12px;font-size:14px;counter-increment:s;line-height:1.55}
+  ol.steps li small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
   ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:#FFF3D6;color:var(--gold-deep);font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center}
   .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
   .tag{background:#FFF3D6;color:var(--gold-deep);font-weight:700;font-size:13px;padding:4px 10px;border-radius:8px}
   .spots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
   .spot{font-size:13px;background:#FBF6EA;border-radius:10px;padding:8px 10px;border:1px solid var(--line)}
   .spot b{display:block;font-size:14px}
-  .spot small{color:var(--muted)}
+  .spot small{color:var(--muted);display:block;line-height:1.4}
   label{display:block;font-size:14px;font-weight:700;margin:16px 0 6px}
   label .req{color:var(--amber)}
   label small{font-weight:400;color:var(--muted);margin-left:6px}
@@ -78,10 +80,10 @@
   <section class="card">
     <h2><i>1</i>참여 방법</h2>
     <ol class="steps">
-      <li>아래 <b>은행나무 명소 6곳 중 1곳 이상</b> 방문 후 은행나무와 함께 인증샷 촬영</li>
-      <li>인스타그램 또는 네이버 블로그에 <b>필수 해시태그 5개</b>와 방문 명소명을 넣어 <b>공개</b>로 게시</li>
-      <li>이 페이지에서 <b>게시물 주소를 접수</b> (1인 1회)</li>
-      <li>12. 3.(목) 반하다밀양 홈페이지에서 당첨자 발표 → <b>네이버포인트 2만원 × 20명</b></li>
+      <li><b>은행나무 명소 6곳 중 1곳 이상</b> 방문,<br>은행나무와 함께 인증샷 촬영</li>
+      <li>인스타그램·네이버 블로그에 <b>공개</b>로 게시<small>필수 해시태그 5개 + 방문 명소명 포함</small></li>
+      <li>이 페이지에서 <b>게시물 주소 접수</b><small>1인 1회</small></li>
+      <li><b>네이버포인트 2만원 × 20명</b> 추첨<small>12. 3.(목) 반하다밀양 홈페이지 발표</small></li>
     </ol>
     <div class="tags">
       <span class="tag">#반하다밀양</span><span class="tag">#반값여행</span><span class="tag">#밀양여행</span><span class="tag">#황금빛밀양</span><span class="tag">#밀양은행나무</span>
@@ -127,16 +129,16 @@
       <label class="check"><input type="checkbox" id="agreeUse" required>
         <span><b>[필수]</b> 게시한 사진을 밀양시·밀양문화관광재단의 관광 홍보 및 「반하다밀양 2026 매거진」에 활용(계정명 표기)하는 것에 동의합니다.</span></label>
       <label class="check"><input type="checkbox" id="agreePrivacy" required>
-        <span><b>[필수]</b> 개인정보(성명·전화번호·네이버 아이디) 수집·이용에 동의합니다. 수집 목적: 참여자 확인, 당첨 안내, 네이버포인트 지급 / 보유 기간: 지급 완료 후 즉시 파기</span></label>
+        <span><b>[필수]</b> 개인정보(성명·전화번호·네이버 아이디) 수집·이용에 동의합니다.<br><small style="color:var(--muted)">목적: 참여자 확인·당첨 안내·네이버포인트 지급 / 보유: 지급 완료 후 즉시 파기</small></span></label>
 
       <div class="alert" id="alertBox"></div>
       <button type="submit" id="submitBtn">접수하기</button>
     </form>
     <ul class="notice">
-      <li>2026년 11월 운영기간 중 촬영한 사진만 인정되며, 과거 사진·타인 사진·AI 생성 이미지는 제외됩니다.</li>
-      <li>게시물은 당첨자 발표일(12. 3.)까지 삭제·비공개 전환 없이 유지해 주세요.</li>
-      <li>게시물은 여러 개 올려도 되지만 추첨은 1인 1회(전화번호 기준 최초 접수 1건)입니다.</li>
-      <li>반값여행 이용자가 아닌 경우 접수가 제외될 수 있습니다.</li>
+      <li>2026년 11월 운영기간 중 촬영한 사진만 인정<br>(과거 사진·타인 사진·AI 생성 이미지 제외)</li>
+      <li>당첨자 발표일(12. 3.)까지 게시물을 삭제·비공개 전환 없이 유지</li>
+      <li>게시물은 여러 개 올려도 되지만<br>추첨은 1인 1회(전화번호 기준 최초 접수 1건)</li>
+      <li>반값여행 이용자가 아닌 경우 접수 제외</li>
     </ul>
   </section>
 
